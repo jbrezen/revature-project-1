@@ -1,0 +1,63 @@
+root - INFO - Program Started
+root - WARNING - import statement not used
+root - ERROR - NameError raised
+logger - INFO - Test Output
+werkzeug - INFO -  * Restarting with stat
+root - INFO - Program Started
+root - WARNING - import statement not used
+root - ERROR - NameError raised
+logger - INFO - Test Output
+werkzeug - WARNING -  * Debugger is active!
+werkzeug - INFO -  * Debugger PIN: 309-398-628
+werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /request/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 08:59:52] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO -  * Detected change in 'C:\\Users\\jerem\\PycharmProjects\\revProject1\\logger.py', reloading
+werkzeug - INFO -  * Restarting with stat
+logger - INFO - Test Output
+werkzeug - WARNING -  * Debugger is active!
+werkzeug - INFO -  * Debugger PIN: 309-398-628
+werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+logger - INFO - Test Output
+werkzeug - INFO -  * Restarting with stat
+logger - INFO - Test Output
+werkzeug - WARNING -  * Debugger is active!
+werkzeug - INFO -  * Debugger PIN: 309-398-628
+werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:19] "[37mGET /login/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:22] "[37mGET /request/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:22] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:22] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:22] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:22] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:22] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:23] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:23] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:24:23] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+logger - INFO - Test Output
+werkzeug - INFO -  * Restarting with stat
+logger - INFO - Test Output
+werkzeug - WARNING -  * Debugger is active!
+werkzeug - INFO -  * Debugger PIN: 309-398-628
+werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:51:35] "[37mGET /login/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:02] "[37mOPTIONS /request/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:02] "[37mPOST /request/ HTTP/1.1[0m" 201 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:29] "[37mGET /request/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:29] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/9/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/1/ HTTP/1.1[0m" 200 -
+werkzeug - INFO - 127.0.0.1 - - [07/May/2021 11:52:30] "[37mGET /employee/1/ HTTP/1.1[0m" 200 -

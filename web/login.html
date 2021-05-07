@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+        <title>Reimbursement System - Log In</title>
+    </head>
+
+    <body>
+        <div id="main" style="position: relative; margin-top: 10%; margin-right: auto; text-align: center;">
+            <h1>Log In to Continue</h1>
+            <h6 id="errorMsg"><br></h6>
+            <input id="username" type="text" placeholder="Username"/>
+            <br>
+            <input id="password" type="password" placeholder="Password"/>
+            <br>
+            <input id="submit" type="button" value="Submit" onclick="tryLogin(event)"/>
+        </div>
+    </body>
+
+    <script>
+        function tryLogin() {
+            var usr = document.getElementById("username").value;
+            var pw = document.getElementById("password").value;
+            
+            if(usr == "" || pw == "") {
+                document.getElementById("errorMsg").innerHTML = "Invalid username and/or password";
+                document.getElementById("errorMsg").style = "color: red";
+                return null;
+            }
+            
+            let xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200) {
+                    console.log("Successful Call");
+
+                    let loginList = JSON.parse(this.responseText);
+                    
+                    var found = false;
+                    for(var i = 0; i < loginList.length; i++) {
+                        var obj = loginList[i];
+                        if(usr == obj.username && pw == obj.password) {
+                            // Set cookies for session
+                            document.cookie = "username = " + usr + "; path=/";
+                            document.cookie = "password = " + pw + "; path=/";
+                            document.cookie = "userId = " + obj.employeeId + "; path=/";
+                            
+                            // Navigate to submission page
+                            found = true;
+                            window.location.href = "submission.html";
+                            break;
+                        }
+                    }
+                    if(!found){
+                        document.getElementById("errorMsg").innerHTML = "Invalid username and/or password";
+                        document.getElementById("errorMsg").style = "color: red";
+                    }
+                    
+                }
+            };
+
+            url = "http://127.0.0.1:5000/login/";
+            xhttp.open("GET", url, true);
+
+            xhttp.send();
+
+        }
+    </script>
+</html>

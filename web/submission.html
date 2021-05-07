@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+        <title>Reimbursement - Submit Request</title>
+    </head>
+
+    <body onload="checkLogin()">
+        <div id="links" style="position: relative; margin-left: 20px; margin-top: 20px;">
+            <a href="supervisorApproval.html">Supervisor Overview</a><br>
+            <a href="headApproval.html">Department Head Overview</a><br>
+            <a href="bencoApproval.html">Benefits Coordinator Overview</a><br>
+            <a href="login.html" onclick="deleteCookies(event)">Log Out</a>
+        </div>
+        <h1 style="text-align: center;">Submit a Reimbursement Request</h1>
+        <h6 id="errorMsg" style="text-align: center;"><br></h6>
+        <div id="main" style="position: relative; margin-left: 40%; text-align: left;">   
+            Cost of Event: <input id="price" type="number"><br>
+            Date of Event: <input id="date" type="date"/> <br>
+            Location of Event: <input id="location" type="text" placeholder="Location"/><br>
+            Describe the Event:<br>
+            <textarea id="desc" rows="4" cols="50" placeholder="Description"></textarea><br>
+            <label for="gradeType">Grade Format: </label>
+            <select id="gradeType">
+                <option value="letterGrade">Letter Grade</option>
+                <option value="presentation">Presentation</option>
+            </select><br>
+            <label for="eventType">Event Type: </label>
+            <select id="eventType">
+                <option value="uniCourse">University Course</option>
+                <option value="seminar">Seminar</option>
+                <option value="certPrep">Certification Prep Class</option>
+                <option value="certification">Certification</option>
+                <option value="techTrain">Technical Training</option>
+                <option value="other">Other</option>
+            </select><br>
+            Justification of Attendance:<br>
+            <textarea id="justification" rows="4" cols="50" placeholder="Enter Text Here"></textarea><br>
+            <label for="dept">Relevant Department:</label>
+            <select id="dept">
+                <option value="science">Science</option>
+                <option value="arts">Arts</option>
+                <option value="humanities">Humanities</option>
+            </select><br>
+            <input id="calcReimburse" type="button" value="Projected Reimbursement" onclick="calcReimbursement(event)">
+            <h6 id="projected" ><br></h6>
+        </div>
+        <input id="submit" type="button" value="Submit" style="margin-left: 47.5%" onclick="postReimbursementReq(event)">
+    </body>
+
+    <script>
+        function checkLogin() {
+            // Redirect to log in page if cookies not set
+            if(document.cookie == "") {
+                window.location.href = "login.html";
+            }
+        }
+
+        function calcReimbursement() {
+            var price = document.getElementById("price").value;
+            if(price == "") {
+                return 0;
+            }
+            var coeff = 0;
+            switch(document.getElementById("eventType").value) {
+                case "uniCourse":
+                    coeff = 0.8;
+                    break;
+                case "seminar": 
+                    coeff = 0.6;
+                    break;
+                case "certPrep": 
+                    coeff = 0.75;
+                    break;
+                case "certification": 
+                    coeff = 1.0;
+                    break;
+                case "techTrain":
+                    coeff = 0.9;
+                    break;
+                case "other": 
+                    coeff = 0.3;
+                    break;
+                default:
+                    coeff = 0;
+            }
+
+            var projected = price*coeff;
+            document.getElementById("projected").innerHTML = "$" + (+projected).toFixed(2);
+
+        }
+
+        function postReimbursementReq() {
+            // Assign inputs to vars
+            var price = document.getElementById("price").value;
+            var date = document.getElementById("date").value;
+            var location = document.getElementById("location").value;
+            var desc = document.getElementById("desc").value;
+            var gradeType = document.getElementById("gradeType").value;
+            var eventType = document.getElementById("eventType").value;
+            var justification = document.getElementById("justification").value;
+
+            // If any non-select vars aren't filled, display error msg and don't attempt post
+            if(price == "" || date == "" || location == "" || desc == "" || justification == "") {
+                document.getElementById("errorMsg").innerHTML = "Please fill all fields.";
+                document.getElementById("errorMsg").style = "color: red; text-align: center;";
+                return null;
+            }
+            document.getElementById("errorMsg").innerHTML = "<br>";
+
+            let xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200) {
+                    console.log("Successful Call");
+
+                    let resp = this.responseText;
+
+                    console.log(resp);
+                }
+            };
+
+            url = "http://127.0.0.1:5000/request/";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+
+            var coeff = 0;
+            switch(document.getElementById("eventType").value) {
+                case "uniCourse":
+                    coeff = 0.8;
+                    break;
+                case "seminar": 
+                    coeff = 0.6;
+                    break;
+                case "certPrep": 
+                    coeff = 0.75;
+                    break;
+                case "certification": 
+                    coeff = 1.0;
+                    break;
+                case "techTrain":
+                    coeff = 0.9;
+                    break;
+                case "other": 
+                    coeff = 0.3;
+                    break;
+                default:
+                    coeff = 0;
+            }
+
+            var dept = 0
+            switch(document.getElementById("dept").value) {
+                case "science":
+                    dept = 1;
+                    break;
+                case "arts":
+                    dept = 2;
+                    break;
+                case "humanities": 
+                    dept = 3;
+                    break;
+                default: 
+                    alert("Something bad happened");
+                    return null;
+            }
+
+            var projected = price*coeff;
+
+            var toSend = {
+                "employeeId": getCookie("userId"),
+                "eventDate": date,
+                "eventLocation": location,
+                "eventDescription": desc,
+                "gradeFormat": gradeType,
+                "eventType": eventType,
+                "justification": justification,
+                "projectedReimbursement": projected,
+                "deptId": dept
+            }
+
+            xhttp.send(JSON.stringify(toSend));
+            alert("Thank you for submitting your request! You should hear back from relevant parties in the coming days.")
+        }
+
+        function deleteCookies() {
+            document.cookie = "username =; expires = Wed, 5 May 2021 12:00:00 UTC; path=/";
+            document.cookie = "password =; expires = Wed, 5 May 2021 12:00:00 UTC; path=/";
+            document.cookie = "userId =; expires = Wed, 5 May 2021 12:00:00 UTC; path=/";
+        }
+
+        // Function obtained from https://stackoverflow.com/questions/10730362/get-cookie-by-name
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
+</html>
