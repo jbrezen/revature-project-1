@@ -2,18 +2,17 @@
 <html>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-        <title>Reimbursement - Supervisor Overview</title>
+        <title>Reimbursement - Request Status</title>
     </head>
 
     <body onload="checkLogin()">
-        <h1 style="text-align: center;">Supervisory Reimbursement Portal</h1>
+        <h1 style="text-align: center;">My Request Status</h1>
         <input id="nameSearch" type="button" value="Retrieve Requests" style="margin-left: 45%;" onclick="getRequests(event)">
         <br><br>
 
         <div div="container">
             <table id="reqTable" class="table table-striped table-dark">
                 <tr>
-                    <th>Name</th>
                     <th>Date</th>
                     <th>Location</th>
                     <th>Description</th>
@@ -21,7 +20,9 @@
                     <th>Event Type</th>
                     <th>Justification</th>
                     <th>Projected Reimbursement</th>
-                    <th>Submit Approval</th>
+                    <th>Supervisor Approval</th>
+                    <th>Department Head Approval</th>
+                    <th>Benefits Coordinator Approval</th>
                 </tr>
             </table>
         </div>
@@ -50,7 +51,7 @@
                         var thisReq = reqList[i];
                         var myId = getCookie("userId");
                         
-                        if(thisReq.supervisorId == myId && thisReq.superApproval == false) {
+                        if(thisReq.employeeId == myId) {
                             var table = document.getElementById("reqTable");
                             var row = table.insertRow(-1);
                             var cell1 = row.insertCell(0); 
@@ -62,66 +63,28 @@
                             var cell7 = row.insertCell(6);
                             var cell8 = row.insertCell(7);
                             var cell9 = row.insertCell(8);
+                            var cell10 = row.insertCell(9);
 
                             row.setAttribute("data-reqId",thisReq.requestId);
                             row.id = "row"+thisReq.requestId;
-                            cell1.innerHTML = thisReq.employeeName;
-                            cell2.innerHTML = thisReq.eventDate;
-                            cell3.innerHTML = thisReq.eventLocation;
-                            cell4.innerHTML = thisReq.eventDescription;
-                            cell5.innerHTML = thisReq.gradeFormat;
-                            cell6.innerHTML = thisReq.eventType;
-                            cell7.innerHTML = thisReq.justification;
-                            cell8.innerHTML = thisReq.projectedReimbursement;
-                            cell9.innerHTML = `<input type=\"button\" value=\"Accept\" 
-                                onclick=\"sendApproval(event,${thisReq.requestId},${thisReq.deptId},${thisReq.employeeId})\"/>`;
+                            cell1.innerHTML = thisReq.eventDate;
+                            cell2.innerHTML = thisReq.eventLocation;
+                            cell3.innerHTML = thisReq.eventDescription;
+                            cell4.innerHTML = thisReq.gradeFormat;
+                            cell5.innerHTML = thisReq.eventType;
+                            cell6.innerHTML = thisReq.justification;
+                            cell7.innerHTML = thisReq.projectedReimbursement;
+                            cell8.innerHTML = thisReq.superApproval;
+                            cell9.innerHTML = thisReq.headApproval;
+                            cell10.innerHTML = thisReq.bencoApproval;
                         }
                     }
                 }
             };
 
-            url = "http://127.0.0.1:5000/requestemployees/";
+            url = "http://127.0.0.1:5000/request/";
             xhttp.open("GET", url, true);
             xhttp.send();
-        }
-
-        function sendApproval(myEvent, reqId, deptId, employeeId) {
-            currentRow = myEvent.currentTarget.parentNode.parentNode;
-            console.log(currentRow);
-            rowCells = currentRow.cells;
-            console.log(rowCells);
-            let xhttp = new XMLHttpRequest();
-
-            xhttp.onreadystatechange = function() {
-                if(this.readyState == 4 && this.status == 200) {
-                    console.log("Approval Button Clicked")
-                }
-            };
-
-            url = "http://127.0.0.1:5000/request/" + reqId + "/";
-            xhttp.open("PUT", url, true);
-            xhttp.setRequestHeader("Content-Type", "application/json");
-
-            // Create json to send back to server updating the supervisor approval check
-            var toSend = {
-                "employeeId": employeeId,
-                "eventDate": rowCells[1].textContent,
-                "eventLocation": rowCells[2].textContent,
-                "eventDescription": rowCells[3].textContent,
-                "gradeFormat": rowCells[4].textContent,
-                "eventType": rowCells[5].textContent,
-                "justification": rowCells[6].textContent,
-                "projectedReimbursement": rowCells[7].textContent,
-                "deptId": deptId,
-                "superApproval": true,
-                "headApproval": null,
-                "bencoApproval": null
-            };
-
-            console.log(toSend);
-
-            xhttp.send(JSON.stringify(toSend));
-            alert("Submission approved!");
         }
 
         // Function obtained from https://stackoverflow.com/questions/10730362/get-cookie-by-name

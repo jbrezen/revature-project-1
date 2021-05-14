@@ -18,6 +18,13 @@
     </body>
 
     <script>
+
+        var curFunds;
+        var return_value;
+        fundsCall = function (return_value){
+            curFunds = return_value;
+        }
+
         function tryLogin() {
             var usr = document.getElementById("username").value;
             var pw = document.getElementById("password").value;
@@ -38,12 +45,15 @@
                     
                     var found = false;
                     for(var i = 0; i < loginList.length; i++) {
-                        var obj = loginList[i];
+                        var obj = loginList[i];                        
+                        
                         if(usr == obj.username && pw == obj.password) {
+                            getFunds(obj.employeeId,fundsCall);
                             // Set cookies for session
                             document.cookie = "username = " + usr + "; path=/";
                             document.cookie = "password = " + pw + "; path=/";
                             document.cookie = "userId = " + obj.employeeId + "; path=/";
+                            document.cookie = "currentFunds = " + curFunds + "; path=/"
                             
                             // Navigate to submission page
                             found = true;
@@ -61,9 +71,24 @@
 
             url = "http://127.0.0.1:5000/login/";
             xhttp.open("GET", url, true);
-
             xhttp.send();
 
+        }
+
+        function getFunds(eid,callback) {
+            let xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200) {
+                    thisEmployee = JSON.parse(this.responseText);
+                    return_value = thisEmployee.currentFunds;
+                    callback.apply(this,[return_value]);
+                }
+            };
+
+            url = "http://127.0.0.1:5000/employee/" + eid + "/";
+            xhttp.open("GET", url, false);
+            xhttp.send();
         }
     </script>
 </html>

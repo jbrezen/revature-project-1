@@ -16,6 +16,14 @@ def route(app):
     def all_requests():
         return jsonify(RequestService.all_requests()), 200
 
+    @app.route("/requestemployees/", methods=['GET'])
+    def join_requests_employees():
+        return jsonify(RequestService.join_requests_employees()), 200
+
+    @app.route("/requestdepts/", methods=['GET'])
+    def join_requests_depts():
+        return jsonify(RequestService.join_requests_depts()), 200
+
     @app.route("/request/<request_id>/", methods=['GET'])
     def get_request(request_id):
         try:
